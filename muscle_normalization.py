@@ -155,4 +155,3 @@ boxPath = r'C:\Users\Lab\Box\Seanez_Lab\SharedFolders\RAW DATA\RCT\RCT007\RCT007
 values, RCT007_trials = read_processed_csv(boxPath)
 NormalizedPlots(values, boxPath, keys_DF, 'RCT007', trial_DF)
 NormalizedPlots(values, boxPath, keys_PF, 'RCT007', trial_PF)
-

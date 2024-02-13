@@ -102,6 +102,11 @@ def process_data_and_plot(dataDir, fileName, sensors_csv_path, amps, trigger_hei
     #     peaks = peaks[-120:] #Used to ignore any extra peaks at the start of recording
     #     peakLoc = peaks[::2] #Only want first peak of paired pulses
 
+
+    peaks, _ = find_peaks(data[:, trigChan-1], height=trigger_height, distance = 50) 
+    peaks = peaks[-120:] #Used to ignore any extra peaks at the start of recording
+    peakLoc = peaks[::2] #Only want first peak of paired pulses
+
     plt.plot(data[:, trigChan-1],'gray',alpha=0.6)
     plt.plot(peakLoc, data[:, trigChan-1][peakLoc], 'x', color='green')
 
@@ -216,10 +221,10 @@ def process_data_and_plot(dataDir, fileName, sensors_csv_path, amps, trigger_hei
         #plt.plot(max_muscle_amp, 'gray')
         #plt.plot(peakIdx + 10, max_muscle_amp[peakIdx + 10], marker ='x', color = 'red', markersize = 10)
         #plt.title(muscle)
-        # if SID_trial == 'RCT002_45p_DF':
-        #     peakLocations[muscle] = peakIdx + 9
-        # else:
-        #     peakLocations[muscle] = peakIdx + 10
+        if SID_trial == 'RCT002_45p_DF':
+            peakLocations[muscle] = peakIdx + 9
+        else:
+            peakLocations[muscle] = peakIdx + 10
 
 
     # windowSize = int(30 * sampFq / 1000)
@@ -234,6 +239,7 @@ def process_data_and_plot(dataDir, fileName, sensors_csv_path, amps, trigger_hei
     df = mean_values_df
     fig_res, axs_res = plt.subplots(len(amps), len(muscles), figsize=(18, 9), sharex=True) #figure for mean traces with max and mins
     peakToPeakValues = {} #saving amplitude responses
+    value = []
     for i, amp in enumerate(amps):
         for j, muscle in enumerate(muscles):
             if muscle in peakLocations:
@@ -336,9 +342,9 @@ def find_sensors_csv_path(dataDir):
 # trigger_height = 0.03
 
 # RCT002
-dataDir = r'C:\Users\Lab\Box\Seanez_Lab\SharedFolders\RAW DATA\RCT\RCT002\RCT002_20240118'
-amps = [200, 166, 132, 98, 64, 30]
-trigger_height = 0.01
+# dataDir = r'C:\Users\Lab\Box\Seanez_Lab\SharedFolders\RAW DATA\RCT\RCT002\RCT002_20240118'
+# amps = [200, 166, 132, 98, 64, 30]
+# trigger_height = 0.01
 
 # RCT003: Window size adjusted to:
     # windowSize = int(30 * sampFq / 1000)
@@ -377,6 +383,14 @@ trigger_height = 0.01
 # amps = [150, 127, 104, 81, 58, 35]
 # trigger_height = 0.01
 
+# RCT008
+    # windowSize = int(30 * sampFq / 1000)
+    # minRangeIdx = int(5 * sampFq / 1000) - 2
+    # maxRangeIdx = int(29 * sampFq / 1000) + 5
+dataDir = r'C:\Users\Lab\Box\Seanez_Lab\SharedFolders\RAW DATA\RCT\RCT008\RCT008_20240208'
+amps = [170, 143.5, 117, 90.5, 64, 37.5]
+trigger_height = 0.01
+
 ###########################################################################################################
 
 csv_files = [file for file in os.listdir(dataDir) if file.endswith('.csv')]
@@ -393,4 +407,3 @@ for i in range(len(filenames_list)-1):
     sensors_csv_path = find_sensors_csv_path(dataDir)
     process_data_and_plot(dataDir, fileName, sensors_csv_path, amps, trigger_height)
     plt.close()
-

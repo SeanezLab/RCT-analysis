@@ -1,5 +1,10 @@
 #Group analysis ideas
-
+import os
+import pandas as pd
+from pathlib import Path
+import matplotlib.pyplot as plt
+import re
+import pickle
 
 # %%
 # # Reading back in the list of DataFrames from Pickle file
@@ -55,6 +60,8 @@ import numpy as np
 fig, ax = plt.subplots(figsize=(16, 10))
 alpha = [0.1, 0.3, 0.5, 0.7, 1]
 participants = ['RCT1', 'RCT3', 'RCT4', 'RCT5', 'RCT7']
+keys_DF = ['rest', '5p_DF', '15p_DF', '30p_DF', '45p_DF']
+colors = ['gold', 'skyblue', 'olivedrab', 'teal', 'indigo']
 
 RTA_group = {}
 RTA_index = {}
