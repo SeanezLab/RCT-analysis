@@ -5,6 +5,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import re
 import pickle
+import seaborn as sns
 
 # %%
 # # Reading back in the list of DataFrames from Pickle file
